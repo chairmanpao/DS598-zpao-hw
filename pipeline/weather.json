@@ -101,6 +101,18 @@
 			"lon": {
 				"type": "float",
 				"defaultValue": -71.0589
+			},
+			"start": {
+				"type": "string",
+				"defaultValue": "@addDays(utcNow(), mul(item(), -7))"
+			},
+			"end": {
+				"type": "string",
+				"defaultValue": "@addDays(utcNow(), mul(add(item(), 1), -7))"
+			},
+			"appid": {
+				"type": "string",
+				"defaultValue": "@{activity('GetAPIKey').output.value}"
 			}
 		},
 		"annotations": []
