@@ -8,19 +8,10 @@
 		"GitHub1_credential": {
 			"value": ""
 		},
-		"HttpServer1_password": {
-			"value": ""
-		},
 		"zpaoDataLake_accountKey": {
 			"value": ""
 		},
 		"GitHub1_properties_typeProperties_username": {
-			"value": "chairmanpao"
-		},
-		"HttpServer1_properties_typeProperties_url": {
-			"value": "https://history.openweathermap.org"
-		},
-		"HttpServer1_properties_typeProperties_userName": {
 			"value": "chairmanpao"
 		},
 		"openweathersecret_properties_typeProperties_baseUrl": {
@@ -28,6 +19,12 @@
 		},
 		"zpaoDataLake_properties_typeProperties_url": {
 			"value": "https://zpaostorage1.dfs.core.windows.net/"
+		},
+		"weather_properties_typeProperties_url": {
+			"value": "https://history.openweathermap.org/"
+		},
+		"airpollution_properties_typeProperties_url": {
+			"value": "http://api.openweathermap.org/"
 		}
 	}
 }
