@@ -14,17 +14,17 @@
 		"GitHub1_properties_typeProperties_username": {
 			"value": "chairmanpao"
 		},
+		"airpollution_properties_typeProperties_url": {
+			"value": "http://api.openweathermap.org/"
+		},
 		"openweathersecret_properties_typeProperties_baseUrl": {
 			"value": "https://zpao-openweather.vault.azure.net/"
-		},
-		"zpaoDataLake_properties_typeProperties_url": {
-			"value": "https://zpaostorage1.dfs.core.windows.net/"
 		},
 		"weather_properties_typeProperties_url": {
 			"value": "https://history.openweathermap.org/"
 		},
-		"airpollution_properties_typeProperties_url": {
-			"value": "http://api.openweathermap.org/"
+		"zpaoDataLake_properties_typeProperties_url": {
+			"value": "https://zpaostorage1.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"value": ""

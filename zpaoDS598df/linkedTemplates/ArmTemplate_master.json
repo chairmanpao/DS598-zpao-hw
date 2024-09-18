@@ -19,21 +19,21 @@
 			"type": "string",
 			"defaultValue": "chairmanpao"
 		},
+		"airpollution_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://api.openweathermap.org/"
+		},
 		"openweathersecret_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://zpao-openweather.vault.azure.net/"
-		},
-		"zpaoDataLake_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://zpaostorage1.dfs.core.windows.net/"
 		},
 		"weather_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://history.openweathermap.org/"
 		},
-		"airpollution_properties_typeProperties_url": {
+		"zpaoDataLake_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "http://api.openweathermap.org/"
+			"defaultValue": "https://zpaostorage1.dfs.core.windows.net/"
 		},
 		"containerUri": {
 			"type": "string",
@@ -71,17 +71,17 @@
 					"GitHub1_properties_typeProperties_username": {
 						"value": "[parameters('GitHub1_properties_typeProperties_username')]"
 					},
+					"airpollution_properties_typeProperties_url": {
+						"value": "[parameters('airpollution_properties_typeProperties_url')]"
+					},
 					"openweathersecret_properties_typeProperties_baseUrl": {
 						"value": "[parameters('openweathersecret_properties_typeProperties_baseUrl')]"
-					},
-					"zpaoDataLake_properties_typeProperties_url": {
-						"value": "[parameters('zpaoDataLake_properties_typeProperties_url')]"
 					},
 					"weather_properties_typeProperties_url": {
 						"value": "[parameters('weather_properties_typeProperties_url')]"
 					},
-					"airpollution_properties_typeProperties_url": {
-						"value": "[parameters('airpollution_properties_typeProperties_url')]"
+					"zpaoDataLake_properties_typeProperties_url": {
+						"value": "[parameters('zpaoDataLake_properties_typeProperties_url')]"
 					}
 				}
 			},

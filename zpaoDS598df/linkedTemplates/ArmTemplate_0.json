@@ -19,21 +19,21 @@
 			"type": "string",
 			"defaultValue": "chairmanpao"
 		},
+		"airpollution_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "http://api.openweathermap.org/"
+		},
 		"openweathersecret_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://zpao-openweather.vault.azure.net/"
-		},
-		"zpaoDataLake_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://zpaostorage1.dfs.core.windows.net/"
 		},
 		"weather_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://history.openweathermap.org/"
 		},
-		"airpollution_properties_typeProperties_url": {
+		"zpaoDataLake_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "http://api.openweathermap.org/"
+			"defaultValue": "https://zpaostorage1.dfs.core.windows.net/"
 		}
 	},
 	"variables": {
@@ -59,6 +59,21 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/airpollution')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('airpollution_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/openweathersecret')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -67,23 +82,6 @@
 				"type": "AzureKeyVault",
 				"typeProperties": {
 					"baseUrl": "[parameters('openweathersecret_properties_typeProperties_baseUrl')]"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/zpaoDataLake')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('zpaoDataLake_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('zpaoDataLake_accountKey')]"
-					}
 				}
 			},
 			"dependsOn": []
@@ -104,16 +102,18 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/airpollution')]",
+			"name": "[concat(parameters('factoryName'), '/zpaoDataLake')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "HttpServer",
+				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('airpollution_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
+					"url": "[parameters('zpaoDataLake_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('zpaoDataLake_accountKey')]"
+					}
 				}
 			},
 			"dependsOn": []
