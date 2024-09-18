@@ -104,11 +104,11 @@
 			},
 			"start": {
 				"type": "string",
-				"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000) - 330 * 24 * 60 * 60"
+				"defaultValue": "@convertToUtcTimestamp(addDays(utcNow(), mul(item(), -7) - 330), 'yyyy-MM-ddTHH:mm:ssZ')"
 			},
 			"end": {
 				"type": "string",
-				"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000) - 330 * 24 * 60 * 60"
+				"defaultValue": "@convertToUtcTimestamp(addDays(utcNow(), mul(add(item(), 1), -7) - 330), 'yyyy-MM-ddTHH:mm:ssZ')"
 			},
 			"appid": {
 				"type": "string",
