@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'credential' of 'GitHub1'"
 		},
+		"HttpServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'HttpServer1'"
+		},
 		"zpaoDataLake_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'zpaoDataLake'"
@@ -22,6 +26,10 @@
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://history.openweathermap.org"
+		},
+		"HttpServer1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "chairmanpao"
 		},
 		"openweathersecret_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -64,7 +72,12 @@
 				"typeProperties": {
 					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Anonymous"
+					"authenticationType": "Basic",
+					"userName": "[parameters('HttpServer1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('HttpServer1_password')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -166,7 +179,11 @@
 						"typeProperties": {
 							"method": "GET",
 							"headers": {},
-							"url": "https://zpao-openweather.vault.azure.net/secrets/OpenWeatherAPIKey?api-version=7.0"
+							"url": "https://zpao-openweather.vault.azure.net/secrets/OpenWeatherAPIKey?api-version=7.0",
+							"authentication": {
+								"type": "MSI",
+								"resource": "https://vault.azure.net"
+							}
 						}
 					},
 					{
