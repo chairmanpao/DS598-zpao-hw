@@ -216,7 +216,7 @@
 						"typeProperties": {
 							"method": "GET",
 							"headers": {},
-							"url": "https://zpao-openweather.vault.azure.net/secrets/OpenWeatherAPIKey?%20api-version=7.0"
+							"url": "https://zpao-openweather.vault.azure.net/secrets/OpenWeatherAPIKey?api-version=7.0"
 						}
 					},
 					{
