@@ -154,11 +154,11 @@
 					},
 					"start": {
 						"type": "string",
-						"defaultValue": "@addDays(utcNow(), mul(item(), -7))"
+						"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7) - 365)), 10000000)"
 					},
 					"end": {
 						"type": "string",
-						"defaultValue": "@addDays(utcNow(), mul(add(item(), 1), -7))"
+						"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7) - 365)), 10000000)"
 					},
 					"appid": {
 						"type": "string",
