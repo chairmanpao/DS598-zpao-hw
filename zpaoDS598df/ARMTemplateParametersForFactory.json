@@ -8,28 +8,19 @@
 		"GitHub1_credential": {
 			"value": ""
 		},
-		"HttpServer1_password": {
-			"value": ""
-		},
-		"api2json_connectionString": {
-			"value": ""
-		},
-		"zpaodatalake_accountKey": {
+		"zpaoDataLake_accountKey": {
 			"value": ""
 		},
 		"GitHub1_properties_typeProperties_username": {
 			"value": "chairmanpao"
 		},
 		"HttpServer1_properties_typeProperties_url": {
-			"value": "https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&start={start}&end={end}&appid={API key}"
-		},
-		"HttpServer1_properties_typeProperties_userName": {
-			"value": "chairmanpao"
+			"value": "https://history.openweathermap.org"
 		},
 		"openweathersecret_properties_typeProperties_baseUrl": {
 			"value": "https://zpao-openweather.vault.azure.net/"
 		},
-		"zpaodatalake_properties_typeProperties_url": {
+		"zpaoDataLake_properties_typeProperties_url": {
 			"value": "https://zpaostorage1.dfs.core.windows.net/"
 		}
 	}

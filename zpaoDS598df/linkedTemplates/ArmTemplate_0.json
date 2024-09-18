@@ -11,17 +11,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'credential' of 'GitHub1'"
 		},
-		"HttpServer1_password": {
+		"zpaoDataLake_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'HttpServer1'"
-		},
-		"api2json_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'api2json'"
-		},
-		"zpaodatalake_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'zpaodatalake'"
+			"metadata": "Secure string for 'accountKey' of 'zpaoDataLake'"
 		},
 		"GitHub1_properties_typeProperties_username": {
 			"type": "string",
@@ -29,17 +21,13 @@
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&start={start}&end={end}&appid={API key}"
-		},
-		"HttpServer1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "chairmanpao"
+			"defaultValue": "https://history.openweathermap.org"
 		},
 		"openweathersecret_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://zpao-openweather.vault.azure.net/"
 		},
-		"zpaodatalake_properties_typeProperties_url": {
+		"zpaoDataLake_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://zpaostorage1.dfs.core.windows.net/"
 		}
@@ -76,25 +64,7 @@
 				"typeProperties": {
 					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
-					"authenticationType": "Basic",
-					"userName": "[parameters('HttpServer1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('HttpServer1_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/api2json')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobStorage",
-				"typeProperties": {
-					"connectionString": "[parameters('api2json_connectionString')]"
+					"authenticationType": "Anonymous"
 				}
 			},
 			"dependsOn": []
@@ -113,17 +83,17 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/zpaodatalake')]",
+			"name": "[concat(parameters('factoryName'), '/zpaoDataLake')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('zpaodatalake_properties_typeProperties_url')]",
+					"url": "[parameters('zpaoDataLake_properties_typeProperties_url')]",
 					"accountKey": {
 						"type": "SecureString",
-						"value": "[parameters('zpaodatalake_accountKey')]"
+						"value": "[parameters('zpaoDataLake_accountKey')]"
 					}
 				}
 			},
@@ -138,33 +108,12 @@
 					"referenceName": "HttpServer1",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"lat": {
-						"type": "string",
-						"defaultValue": "42.3601"
-					},
-					"lon": {
-						"type": "string",
-						"defaultValue": "-71.0589"
-					},
-					"appid": {
-						"type": "string",
-						"defaultValue": "@activity('GetAPIKey').output.value"
-					},
-					"start": {
-						"type": "string",
-						"defaultValue": "@addDays(utcNow(), mul(-7, item()))"
-					},
-					"end": {
-						"type": "string",
-						"defaultValue": "@addDays(addDays(utcNow(), mul(-7, item())), 6)"
-					}
-				},
 				"annotations": [],
 				"type": "Json",
 				"typeProperties": {
 					"location": {
-						"type": "HttpServerLocation"
+						"type": "HttpServerLocation",
+						"relativeUrl": "/data/2.5/history/city?lat=42.3601&lon=-71.0589&type=hour&start=@{activity('GetAPIKey').output.value}&appid=@{activity('GetAPIKey').output.value}"
 					}
 				},
 				"schema": {}
@@ -179,24 +128,25 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "zpaodatalake",
+					"referenceName": "zpaoDataLake",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
 				"type": "Json",
 				"typeProperties": {
 					"location": {
-						"type": "AzureBlobFSLocation"
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "zpaoblob1"
 					}
 				},
 				"schema": {}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/zpaodatalake')]"
+				"[concat(variables('factoryId'), '/linkedServices/zpaoDataLake')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/airpollution')]",
+			"name": "[concat(parameters('factoryName'), '/weather')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -216,11 +166,7 @@
 						"typeProperties": {
 							"method": "GET",
 							"headers": {},
-							"url": "https://zpao-openweather.vault.azure.net/secrets/openweather-s/2d02b22b17484c4ab45fbafd385f8c56",
-							"authentication": {
-								"type": "MSI",
-								"resource": "https://vault.azure.net"
-							}
+							"url": "https://zpao-openweather.vault.azure.net/secrets/OpenWeatherAPIKey?api-version=7.0"
 						}
 					},
 					{
@@ -267,7 +213,8 @@
 										"sink": {
 											"type": "JsonSink",
 											"storeSettings": {
-												"type": "AzureBlobFSWriteSettings"
+												"type": "AzureBlobFSWriteSettings",
+												"copyBehavior": "FlattenHierarchy"
 											},
 											"formatSettings": {
 												"type": "JsonWriteSettings"
@@ -279,19 +226,7 @@
 										{
 											"referenceName": "Json1",
 											"type": "DatasetReference",
-											"parameters": {
-												"lat": "42.3601",
-												"lon": "-71.0589",
-												"appid": "@activity('GetAPIKey').output.value",
-												"start": {
-													"value": "@addDays(utcNow(), mul(-7, item()))",
-													"type": "Expression"
-												},
-												"end": {
-													"value": "@addDays(addDays(utcNow(), mul(-7, item())), 6)",
-													"type": "Expression"
-												}
-											}
+											"parameters": {}
 										}
 									],
 									"outputs": [
@@ -308,16 +243,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"weekCount": {
-						"type": "int",
-						"defaultValue": 52
-					},
-					"startDate": {
-						"type": "string",
-						"defaultValue": "@adddays(utcnow(), -365)"
-					}
 				},
 				"annotations": []
 			},

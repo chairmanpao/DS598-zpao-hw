@@ -11,17 +11,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'credential' of 'GitHub1'"
 		},
-		"HttpServer1_password": {
+		"zpaoDataLake_accountKey": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'HttpServer1'"
-		},
-		"api2json_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'api2json'"
-		},
-		"zpaodatalake_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'zpaodatalake'"
+			"metadata": "Secure string for 'accountKey' of 'zpaoDataLake'"
 		},
 		"GitHub1_properties_typeProperties_username": {
 			"type": "string",
@@ -29,17 +21,13 @@
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&start={start}&end={end}&appid={API key}"
-		},
-		"HttpServer1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "chairmanpao"
+			"defaultValue": "https://history.openweathermap.org"
 		},
 		"openweathersecret_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://zpao-openweather.vault.azure.net/"
 		},
-		"zpaodatalake_properties_typeProperties_url": {
+		"zpaoDataLake_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://zpaostorage1.dfs.core.windows.net/"
 		},
@@ -73,14 +61,8 @@
 					"GitHub1_credential": {
 						"value": "[parameters('GitHub1_credential')]"
 					},
-					"HttpServer1_password": {
-						"value": "[parameters('HttpServer1_password')]"
-					},
-					"api2json_connectionString": {
-						"value": "[parameters('api2json_connectionString')]"
-					},
-					"zpaodatalake_accountKey": {
-						"value": "[parameters('zpaodatalake_accountKey')]"
+					"zpaoDataLake_accountKey": {
+						"value": "[parameters('zpaoDataLake_accountKey')]"
 					},
 					"GitHub1_properties_typeProperties_username": {
 						"value": "[parameters('GitHub1_properties_typeProperties_username')]"
@@ -88,14 +70,11 @@
 					"HttpServer1_properties_typeProperties_url": {
 						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					},
-					"HttpServer1_properties_typeProperties_userName": {
-						"value": "[parameters('HttpServer1_properties_typeProperties_userName')]"
-					},
 					"openweathersecret_properties_typeProperties_baseUrl": {
 						"value": "[parameters('openweathersecret_properties_typeProperties_baseUrl')]"
 					},
-					"zpaodatalake_properties_typeProperties_url": {
-						"value": "[parameters('zpaodatalake_properties_typeProperties_url')]"
+					"zpaoDataLake_properties_typeProperties_url": {
+						"value": "[parameters('zpaoDataLake_properties_typeProperties_url')]"
 					}
 				}
 			},
