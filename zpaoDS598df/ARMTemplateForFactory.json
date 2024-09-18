@@ -69,7 +69,7 @@
 						"typeProperties": {
 							"method": "GET",
 							"headers": {},
-							"url": "https://zpao-openweather.vault.azure.net/secrets/OpenWeatherAPIKey?api-version=7.0",
+							"url": "https://zpao-openweather.vault.azure.net/secrets/openweather-s/2d02b22b17484c4ab45fbafd385f8c56",
 							"authentication": {
 								"type": "MSI",
 								"resource": "https://vault.azure.net"
