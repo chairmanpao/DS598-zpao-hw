@@ -147,13 +147,17 @@
 						"type": "string",
 						"defaultValue": "-71.0589"
 					},
-					"dt": {
-						"type": "string",
-						"defaultValue": "@div(adddays(utcnow(), -(7 * item()) - 1), 1000)"
-					},
 					"appid": {
 						"type": "string",
 						"defaultValue": "@activity('GetAPIKey').output.value"
+					},
+					"start": {
+						"type": "string",
+						"defaultValue": "@addDays(utcNow(), mul(-7, item()))"
+					},
+					"end": {
+						"type": "string",
+						"defaultValue": "@addDays(addDays(utcNow(), mul(-7, item())), 6)"
 					}
 				},
 				"annotations": [],
@@ -229,7 +233,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@range(0, pipeline().parameters.weekCount)\n",
+								"value": "@range(0, 52)\n",
 								"type": "Expression"
 							},
 							"activities": [
@@ -274,11 +278,15 @@
 											"parameters": {
 												"latitude": "42.3601",
 												"longitude": "-71.0589",
-												"dt": {
-													"value": "@formatDateTime(adddays(utcnow(), add(mul(-7, item()), -1)), 'yyyy-MM-ddTHH:mm:ssZ')\n",
+												"appid": "@activity('GetAPIKey').output.value",
+												"start": {
+													"value": "@addDays(utcNow(), mul(-7, item()))",
 													"type": "Expression"
 												},
-												"appid": "@activity('GetAPIKey').output.value"
+												"end": {
+													"value": "@addDays(addDays(utcNow(), mul(-7, item())), 6)",
+													"type": "Expression"
+												}
 											}
 										}
 									],
@@ -301,6 +309,10 @@
 					"weekCount": {
 						"type": "int",
 						"defaultValue": 52
+					},
+					"startDate": {
+						"type": "string",
+						"defaultValue": "@adddays(utcnow(), -365)"
 					}
 				},
 				"annotations": []
