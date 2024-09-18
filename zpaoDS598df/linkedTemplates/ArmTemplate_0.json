@@ -29,7 +29,7 @@
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.openweathermap.org/data/2.5/onecall/timemachine"
+			"defaultValue": "https://history.openweathermap.org/data/2.5/history/city?lat={lat}&lon={lon}&type=hour&start={start}&end={end}&appid={API key}"
 		},
 		"HttpServer1_properties_typeProperties_userName": {
 			"type": "string",
@@ -139,11 +139,11 @@
 					"type": "LinkedServiceReference"
 				},
 				"parameters": {
-					"latitude": {
+					"lat": {
 						"type": "string",
 						"defaultValue": "42.3601"
 					},
-					"longitude": {
+					"lon": {
 						"type": "string",
 						"defaultValue": "-71.0589"
 					},
@@ -280,8 +280,8 @@
 											"referenceName": "Json1",
 											"type": "DatasetReference",
 											"parameters": {
-												"latitude": "42.3601",
-												"longitude": "-71.0589",
+												"lat": "42.3601",
+												"lon": "-71.0589",
 												"appid": "@activity('GetAPIKey').output.value",
 												"start": {
 													"value": "@addDays(utcNow(), mul(-7, item()))",
