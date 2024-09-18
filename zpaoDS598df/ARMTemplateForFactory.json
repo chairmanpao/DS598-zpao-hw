@@ -64,7 +64,7 @@
 							"url": "https://zpao-weather.vault.azure.net/secrets/zpao-weather?api-version=7.0",
 							"authentication": {
 								"type": "MSI",
-								"resource": "https://vault.azure.net"
+								"resource": "https://zpao-openweather.vault.azure.net/"
 							}
 						}
 					},
