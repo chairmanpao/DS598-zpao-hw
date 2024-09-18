@@ -125,8 +125,7 @@
 				"type": "Json",
 				"typeProperties": {
 					"location": {
-						"type": "HttpServerLocation",
-						"relativeUrl": "/data/2.5/history/city?lat=42.3601&lon=-71.0589&type=hour&start=@{activity('GetAPIKey').output.value}&appid=@{activity('GetAPIKey').output.value}"
+						"type": "HttpServerLocation"
 					}
 				},
 				"schema": {}
