@@ -9,7 +9,8 @@
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation"
+				"type": "HttpServerLocation",
+				"relativeUrl": "data/2.5/history/city?lat=@{pipeline().parameters.lat}&lon=@{pipeline().parameters.lon}&start=@{addDays(utcNow(), mul(item(), -7))}&end=@{addDays(utcNow(), mul(add(item(), 1), -7))}&appid=@{activity('GetAPIKey').output.value}"
 			}
 		},
 		"schema": {}

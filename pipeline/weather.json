@@ -26,14 +26,7 @@
 			{
 				"name": "ForEach1",
 				"type": "ForEach",
-				"dependsOn": [
-					{
-						"activity": "GetAPIKey",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
@@ -93,6 +86,16 @@
 				}
 			}
 		],
+		"parameters": {
+			"lat": {
+				"type": "float",
+				"defaultValue": 42.3601
+			},
+			"lon": {
+				"type": "float",
+				"defaultValue": -71.0589
+			}
+		},
 		"annotations": []
 	}
 }
