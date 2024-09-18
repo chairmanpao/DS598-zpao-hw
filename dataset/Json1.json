@@ -1,0 +1,35 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "HttpServer1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"latitude": {
+				"type": "string",
+				"defaultValue": "42.3601"
+			},
+			"longitude": {
+				"type": "string",
+				"defaultValue": "-71.0589"
+			},
+			"dt": {
+				"type": "string",
+				"defaultValue": "@div(adddays(utcnow(), -(7 * item()) - 1), 1000)"
+			},
+			"appid": {
+				"type": "string",
+				"defaultValue": "@activity('GetAPIKey').output.value"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "HttpServerLocation"
+			}
+		},
+		"schema": {}
+	}
+}

@@ -21,7 +21,6 @@
 			},
 			{
 				"name": "ForEach1",
-				"description": "",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -34,10 +33,9 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@variables('x')",
+						"value": "@range(0, pipeline().parameters.weekCount)\n",
 						"type": "Expression"
 					},
-					"isSequential": false,
 					"activities": [
 						{
 							"name": "Copy data1",
@@ -55,9 +53,8 @@
 								"source": {
 									"type": "JsonSource",
 									"storeSettings": {
-										"type": "AzureBlobStorageReadSettings",
-										"recursive": true,
-										"enablePartitionDiscovery": false
+										"type": "HttpReadSettings",
+										"requestMethod": "GET"
 									},
 									"formatSettings": {
 										"type": "JsonReadSettings"
@@ -66,8 +63,7 @@
 								"sink": {
 									"type": "JsonSink",
 									"storeSettings": {
-										"type": "AzureBlobFSWriteSettings",
-										"copyBehavior": "FlattenHierarchy"
+										"type": "AzureBlobFSWriteSettings"
 									},
 									"formatSettings": {
 										"type": "JsonWriteSettings"
@@ -78,7 +74,13 @@
 							"inputs": [
 								{
 									"referenceName": "Json1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"latitude": "42.3601",
+										"longitude": "-71.0589",
+										"dt": "@div(adddays(utcnow(), -(7 * item()) - 1), 1000)",
+										"appid": "@activity('GetAPIKey').output.value"
+									}
 								}
 							],
 							"outputs": [
@@ -92,9 +94,9 @@
 				}
 			}
 		],
-		"variables": {
-			"x": {
-				"type": "Integer",
+		"parameters": {
+			"weekCount": {
+				"type": "int",
 				"defaultValue": 52
 			}
 		},
