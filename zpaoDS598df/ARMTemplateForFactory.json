@@ -131,7 +131,10 @@
 											"parameters": {
 												"latitude": "42.3601",
 												"longitude": "-71.0589",
-												"dt": "@div(adddays(utcnow(), -(7 * item()) - 1), 1000)",
+												"dt": {
+													"value": "@div(sub(ticks(adddays(utcnow(), add(mul(-7, item()), -1))), ticks('1970-01-01T00:00:00Z')), 10000000)\n",
+													"type": "Expression"
+												},
 												"appid": "@activity('GetAPIKey').output.value"
 											}
 										}
@@ -162,6 +165,68 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Json1')]",
 				"[concat(variables('factoryId'), '/datasets/Json2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "HttpServer1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"latitude": {
+						"type": "string",
+						"defaultValue": "42.3601"
+					},
+					"longitude": {
+						"type": "string",
+						"defaultValue": "-71.0589"
+					},
+					"dt": {
+						"type": "string",
+						"defaultValue": "@div(adddays(utcnow(), -(7 * item()) - 1), 1000)"
+					},
+					"appid": {
+						"type": "string",
+						"defaultValue": "@activity('GetAPIKey').output.value"
+					}
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/HttpServer1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "zpaodatalake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/zpaodatalake')]"
 			]
 		},
 		{
@@ -244,68 +309,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Json1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "HttpServer1",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"latitude": {
-						"type": "string",
-						"defaultValue": "42.3601"
-					},
-					"longitude": {
-						"type": "string",
-						"defaultValue": "-71.0589"
-					},
-					"dt": {
-						"type": "string",
-						"defaultValue": "@div(adddays(utcnow(), -(7 * item()) - 1), 1000)"
-					},
-					"appid": {
-						"type": "string",
-						"defaultValue": "@activity('GetAPIKey').output.value"
-					}
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "HttpServerLocation"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/HttpServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Json2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "zpaodatalake",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Json",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation"
-					}
-				},
-				"schema": {}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/zpaodatalake')]"
-			]
 		}
 	]
 }
