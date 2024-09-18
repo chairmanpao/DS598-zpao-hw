@@ -187,7 +187,7 @@
 					"location": {
 						"type": "HttpServerLocation",
 						"relativeUrl": {
-							"value": "data/2.5/history/city?lat=@{pipeline().parameters.lat}&lon=@{pipeline().parameters.lon}&type=hour&start=1694908800&end=1726444800&appid=@{activity('GetAPIKey').output.value}\n",
+							"value": "data/2.5/history/city?id={id}&type=hour&start={start}&end={end}&appid={API key}",
 							"type": "Expression"
 						}
 					}
