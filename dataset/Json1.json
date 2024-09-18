@@ -31,8 +31,7 @@
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation",
-				"relativeUrl": "?lat=@{dataset().lat}&lon=@{dataset().lon}&dt=@{dataset().start}&appid=@{activity('GetAPIKey').output.value}"
+				"type": "HttpServerLocation"
 			}
 		},
 		"schema": {}
