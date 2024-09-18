@@ -154,11 +154,11 @@
 					},
 					"start": {
 						"type": "string",
-						"defaultValue": "@convertToUtcTimestamp(addDays(utcNow(), mul(item(), -7) - 330), 'yyyy-MM-ddTHH:mm:ssZ')"
+						"defaultValue": "1694923200"
 					},
 					"end": {
 						"type": "string",
-						"defaultValue": "@convertToUtcTimestamp(addDays(utcNow(), mul(add(item(), 1), -7) - 330), 'yyyy-MM-ddTHH:mm:ssZ')"
+						"defaultValue": "1726545600"
 					},
 					"appid": {
 						"type": "string",
