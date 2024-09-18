@@ -104,11 +104,11 @@
 			},
 			"start": {
 				"type": "string",
-				"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7) - 30*11)), 10000000)"
+				"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000) - 330 * 24 * 60 * 60"
 			},
 			"end": {
 				"type": "string",
-				"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7) - 30*11)), 10000000)"
+				"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000) - 330 * 24 * 60 * 60"
 			},
 			"appid": {
 				"type": "string",
