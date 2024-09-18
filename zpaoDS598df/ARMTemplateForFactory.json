@@ -186,10 +186,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "HttpServerLocation",
-						"relativeUrl": {
-							"value": "data/2.5/history/city?lat=@{pipeline().parameters.lat}&lon=@{pipeline().parameters.lon}&start=@{addDays(utcNow(), mul(item(), -7))}&end=@{addDays(utcNow(), mul(add(item(), 1), -7))}&appid=@{activity('GetAPIKey').output.value}",
-							"type": "Expression"
-						}
+						"relativeUrl": "data/2.5/history/city?lat=@{pipeline().parameters.lat}&lon=@{pipeline().parameters.lon}&start=@{div(ticks(addDays(utcNow(), mul(item(), -7) - 365)), 10000000)}&end=@{div(ticks(addDays(utcNow(), mul(add(item(), 1), -7) - 365)), 10000000)}&appid=@{activity('GetAPIKey').output.value}"
 					}
 				},
 				"schema": {}
