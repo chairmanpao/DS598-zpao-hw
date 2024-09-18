@@ -33,7 +33,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@range(0, pipeline().parameters.weekCount)\n",
+						"value": "@range(0, 52)\n",
 						"type": "Expression"
 					},
 					"activities": [
@@ -78,11 +78,15 @@
 									"parameters": {
 										"latitude": "42.3601",
 										"longitude": "-71.0589",
-										"dt": {
-											"value": "@formatDateTime(adddays(utcnow(), add(mul(-7, item()), -1)), 'yyyy-MM-ddTHH:mm:ssZ')\n",
+										"appid": "@activity('GetAPIKey').output.value",
+										"start": {
+											"value": "@addDays(utcNow(), mul(-7, item()))",
 											"type": "Expression"
 										},
-										"appid": "@activity('GetAPIKey').output.value"
+										"end": {
+											"value": "@addDays(addDays(utcNow(), mul(-7, item())), 6)",
+											"type": "Expression"
+										}
 									}
 								}
 							],
@@ -101,6 +105,10 @@
 			"weekCount": {
 				"type": "int",
 				"defaultValue": 52
+			},
+			"startDate": {
+				"type": "string",
+				"defaultValue": "@adddays(utcnow(), -365)"
 			}
 		},
 		"annotations": []

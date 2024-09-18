@@ -14,13 +14,17 @@
 				"type": "string",
 				"defaultValue": "-71.0589"
 			},
-			"dt": {
-				"type": "string",
-				"defaultValue": "@div(adddays(utcnow(), -(7 * item()) - 1), 1000)"
-			},
 			"appid": {
 				"type": "string",
 				"defaultValue": "@activity('GetAPIKey').output.value"
+			},
+			"start": {
+				"type": "string",
+				"defaultValue": "@addDays(utcNow(), mul(-7, item()))"
+			},
+			"end": {
+				"type": "string",
+				"defaultValue": "@addDays(addDays(utcNow(), mul(-7, item())), 6)"
 			}
 		},
 		"annotations": [],
