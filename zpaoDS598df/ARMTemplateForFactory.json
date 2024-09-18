@@ -71,14 +71,7 @@
 					{
 						"name": "ForEach1",
 						"type": "ForEach",
-						"dependsOn": [
-							{
-								"activity": "GetAPIKey",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
@@ -143,6 +136,16 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"parameters": {
+					"lat": {
+						"type": "float",
+						"defaultValue": 42.3601
+					},
+					"lon": {
+						"type": "float",
+						"defaultValue": -71.0589
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
@@ -163,7 +166,11 @@
 				"type": "Json",
 				"typeProperties": {
 					"location": {
-						"type": "HttpServerLocation"
+						"type": "HttpServerLocation",
+						"relativeUrl": {
+							"value": "data/2.5/history/city?lat=@{pipeline().parameters.lat}&lon=@{pipeline().parameters.lon}&start=@{addDays(utcNow(), mul(item(), -7))}&end=@{addDays(utcNow(), mul(add(item(), 1), -7))}&appid=@{activity('GetAPIKey').output.value}",
+							"type": "Expression"
+						}
 					}
 				},
 				"schema": {}
