@@ -104,11 +104,11 @@
 			},
 			"start": {
 				"type": "string",
-				"defaultValue": "1726545600"
+				"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000)"
 			},
 			"end": {
 				"type": "string",
-				"defaultValue": "1694923200"
+				"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000)"
 			},
 			"appid": {
 				"type": "string",
