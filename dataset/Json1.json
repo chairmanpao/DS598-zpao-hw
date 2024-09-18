@@ -5,13 +5,39 @@
 			"referenceName": "weather",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"lat": {
+				"type": "string",
+				"defaultValue": "42.3601"
+			},
+			"lon": {
+				"type": "string",
+				"defaultValue": "-71.0589"
+			},
+			"start": {
+				"type": "string",
+				"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000)"
+			},
+			"end": {
+				"type": "string",
+				"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000)"
+			},
+			"appid": {
+				"type": "string",
+				"defaultValue": "@{activity('GetAPIKey').output.value}"
+			},
+			"dataType": {
+				"type": "string",
+				"defaultValue": "hour"
+			}
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
 				"type": "HttpServerLocation",
 				"relativeUrl": {
-					"value": "data/2.5/history/city?id={id}&type=hour&start={start}&end={end}&appid={API key}",
+					"value": "https://data/2.5/history/city?lat=@{dataset().lat}&lon=@{dataset().lon}&type=@{dataset().dataType}&start=@{dataset().start}&end=@{dataset().end}&appid=@{dataset().appid}",
 					"type": "Expression"
 				}
 			}

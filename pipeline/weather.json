@@ -79,7 +79,14 @@
 							"inputs": [
 								{
 									"referenceName": "Json1",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"lat": "42.3601",
+										"lon": "-71.0589",
+										"start": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000)",
+										"end": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000)",
+										"appid": "@{activity('GetAPIKey').output.value}"
+									}
 								}
 							],
 							"outputs": [
