@@ -154,11 +154,11 @@
 					},
 					"start": {
 						"type": "string",
-						"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7) - 30*11)), 10000000)"
+						"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000) - 330 * 24 * 60 * 60"
 					},
 					"end": {
 						"type": "string",
-						"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7) - 30*11)), 10000000)"
+						"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000) - 330 * 24 * 60 * 60"
 					},
 					"appid": {
 						"type": "string",
@@ -187,7 +187,7 @@
 					"location": {
 						"type": "HttpServerLocation",
 						"relativeUrl": {
-							"value": "data/2.5/history/city?lat=@{pipeline().parameters.lat}&lon=@{pipeline().parameters.lon}&start=@{div(ticks(addDays(utcNow(), mul(item(), -7) - 30*11)), 10000000)}&end=@{div(ticks(addDays(utcNow(), mul(add(item(), 1), -7) - 30*11)), 10000000)}&type=hour&appid=@{activity('GetAPIKey').output.value}",
+							"value": "data/2.5/history/city?lat=@{pipeline().parameters.lat}&lon=@{pipeline().parameters.lon}&start=@{div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000) - 330 * 24 * 60 * 60}&end=@{div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000) - 330 * 24 * 60 * 60}&type=hour&appid=@{activity('GetAPIKey').output.value}",
 							"type": "Expression"
 						}
 					}
