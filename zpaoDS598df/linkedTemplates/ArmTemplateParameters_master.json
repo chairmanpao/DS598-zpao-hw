@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "zpaoDS598df"
+		},
+		"GitHub1_credential": {
+			"value": ""
+		},
+		"HttpServer1_password": {
+			"value": ""
+		},
+		"api2json_connectionString": {
+			"value": ""
+		},
+		"zpaodatalake_accountKey": {
+			"value": ""
+		},
+		"GitHub1_properties_typeProperties_username": {
+			"value": "chairmanpao"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://api.openweathermap.org/data/2.5/onecall/timemachine"
+		},
+		"HttpServer1_properties_typeProperties_userName": {
+			"value": "chairmanpao"
+		},
+		"openweathersecret_properties_typeProperties_baseUrl": {
+			"value": "https://zpao-openweather.vault.azure.net/"
+		},
+		"zpaodatalake_properties_typeProperties_url": {
+			"value": "https://zpaostorage1.dfs.core.windows.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
