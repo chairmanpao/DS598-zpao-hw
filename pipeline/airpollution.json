@@ -80,8 +80,8 @@
 									"referenceName": "Json1",
 									"type": "DatasetReference",
 									"parameters": {
-										"latitude": "42.3601",
-										"longitude": "-71.0589",
+										"lat": "42.3601",
+										"lon": "-71.0589",
 										"appid": "@activity('GetAPIKey').output.value",
 										"start": {
 											"value": "@addDays(utcNow(), mul(-7, item()))",

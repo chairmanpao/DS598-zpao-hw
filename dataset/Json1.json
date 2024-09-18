@@ -6,11 +6,11 @@
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
-			"latitude": {
+			"lat": {
 				"type": "string",
 				"defaultValue": "42.3601"
 			},
-			"longitude": {
+			"lon": {
 				"type": "string",
 				"defaultValue": "-71.0589"
 			},
@@ -25,6 +25,10 @@
 			"end": {
 				"type": "string",
 				"defaultValue": "@addDays(addDays(utcNow(), mul(-7, item())), 6)"
+			},
+			"type": {
+				"type": "string",
+				"defaultValue": "hour"
 			}
 		},
 		"annotations": [],
