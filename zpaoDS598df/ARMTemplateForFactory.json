@@ -130,7 +130,8 @@
 												"lon": "-71.0589",
 												"start": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000)",
 												"end": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000)",
-												"appid": "@{activity('GetAPIKey').output.value}"
+												"appid": "@{activity('GetAPIKey').output.value}",
+												"dataType": "hour"
 											}
 										}
 									],
@@ -148,28 +149,6 @@
 				],
 				"policy": {
 					"elapsedTimeMetric": {}
-				},
-				"parameters": {
-					"lat": {
-						"type": "float",
-						"defaultValue": 42.3601
-					},
-					"lon": {
-						"type": "float",
-						"defaultValue": -71.0589
-					},
-					"start": {
-						"type": "string",
-						"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000)"
-					},
-					"end": {
-						"type": "string",
-						"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000)"
-					},
-					"appid": {
-						"type": "string",
-						"defaultValue": "@{activity('GetAPIKey').output.value}"
-					}
 				},
 				"annotations": []
 			},
@@ -197,12 +176,10 @@
 						"defaultValue": "-71.0589"
 					},
 					"start": {
-						"type": "string",
-						"defaultValue": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000)"
+						"type": "string"
 					},
 					"end": {
-						"type": "string",
-						"defaultValue": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000)"
+						"type": "string"
 					},
 					"appid": {
 						"type": "string",
