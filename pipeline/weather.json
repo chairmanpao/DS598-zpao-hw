@@ -85,7 +85,8 @@
 										"lon": "-71.0589",
 										"start": "@div(ticks(addDays(utcNow(), mul(item(), -7))), 10000000)",
 										"end": "@div(ticks(addDays(utcNow(), mul(add(item(), 1), -7))), 10000000)",
-										"appid": "@{activity('GetAPIKey').output.value}"
+										"appid": "@{activity('GetAPIKey').output.value}",
+										"dataType": "hour"
 									}
 								}
 							],
