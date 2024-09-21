@@ -68,7 +68,12 @@
 				"inputs": [
 					{
 						"referenceName": "Json3",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"lat": "42.3601",
+							"lon": "-71.0589",
+							"appid": "@{activity('GetAPIKey').output.value}"
+						}
 					}
 				],
 				"outputs": [
