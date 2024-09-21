@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Web1",
+				"name": "GetAPIKey",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -28,7 +28,7 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Web1",
+						"activity": "GetAPIKey",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -70,8 +70,8 @@
 						"referenceName": "Json3",
 						"type": "DatasetReference",
 						"parameters": {
-							"lat": "42.3601",
-							"lon": "-71.0589",
+							"lat": 42.3601,
+							"lon": -71.0589,
 							"appid": "@{activity('GetAPIKey').output.value}"
 						}
 					}
