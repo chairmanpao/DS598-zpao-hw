@@ -48,7 +48,7 @@
 								{
 									"activity": "Wait1",
 									"dependencyConditions": [
-										"Completed"
+										"Succeeded"
 									]
 								}
 							],
