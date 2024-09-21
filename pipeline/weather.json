@@ -37,14 +37,21 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@range(0, 51)\n",
+						"value": "@range(0, 52)\n",
 						"type": "Expression"
 					},
 					"activities": [
 						{
 							"name": "Copy data1",
 							"type": "Copy",
-							"dependsOn": [],
+							"dependsOn": [
+								{
+									"activity": "Wait1",
+									"dependencyConditions": [
+										"Completed"
+									]
+								}
+							],
 							"policy": {
 								"timeout": "0.12:00:00",
 								"retry": 0,
@@ -106,17 +113,10 @@
 						{
 							"name": "Wait1",
 							"type": "Wait",
-							"dependsOn": [
-								{
-									"activity": "Copy data1",
-									"dependencyConditions": [
-										"Succeeded"
-									]
-								}
-							],
+							"dependsOn": [],
 							"userProperties": [],
 							"typeProperties": {
-								"waitTimeInSeconds": 3
+								"waitTimeInSeconds": 10
 							}
 						}
 					]
