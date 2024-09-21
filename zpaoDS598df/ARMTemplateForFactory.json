@@ -178,7 +178,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"items": {
-								"value": "@range(0, 52)\n",
+								"value": "@range(0, 3)\n",
 								"type": "Expression"
 							},
 							"activities": [
