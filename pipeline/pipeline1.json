@@ -72,8 +72,8 @@
 						"parameters": {
 							"lat": "42.3601",
 							"lon": "-71.0589",
-							"start": "1717776851",
-							"end": "1718381651",
+							"start": "1718381651",
+							"end": "1717776851",
 							"appid": "@{activity('GetAPIKey').output.value}",
 							"dataType": "hour"
 						}
