@@ -5,11 +5,29 @@
 			"referenceName": "airpollution",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"lat": {
+				"type": "string",
+				"defaultValue": "42.3601"
+			},
+			"lon": {
+				"type": "string",
+				"defaultValue": "-71.0589"
+			},
+			"appid": {
+				"type": "string",
+				"defaultValue": "@{activity('GetAPIKey').output.value}"
+			}
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {
 			"location": {
-				"type": "HttpServerLocation"
+				"type": "HttpServerLocation",
+				"relativeUrl": {
+					"value": "data/2.5/air_pollution?lat={lat}&lon={lon}&appid={API key}",
+					"type": "Expression"
+				}
 			}
 		},
 		"schema": {}
