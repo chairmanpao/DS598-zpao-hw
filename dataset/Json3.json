@@ -7,12 +7,12 @@
 		},
 		"parameters": {
 			"lat": {
-				"type": "string",
-				"defaultValue": "42.3601"
+				"type": "float",
+				"defaultValue": 42.3601
 			},
 			"lon": {
-				"type": "string",
-				"defaultValue": "-71.0589"
+				"type": "float",
+				"defaultValue": -71.0589
 			},
 			"appid": {
 				"type": "string",
