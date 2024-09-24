@@ -16,7 +16,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"method": "GET",
-					"url": "https://zpao-weather.vault.azure.net/secrets/zpao-weather?api-version=7.0",
+					"url": {
+						"value": "https://zpao-weather.vault.azure.net/secrets/zpao-weather?api-version=7.0",
+						"type": "Expression"
+					},
 					"authentication": {
 						"type": "MSI",
 						"resource": "https://vault.azure.net/"
