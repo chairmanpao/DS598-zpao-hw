@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "weatherhistory",
+				"folderPath": "airpollution",
 				"fileSystem": "zpaoblob1"
 			}
 		},
