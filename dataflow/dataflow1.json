@@ -22,6 +22,9 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -38,9 +41,19 @@
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine',",
 				"     wildcardPaths:['/weatherhistory/data_*.json']) ~> source1",
-				"flatten1 derive(timestamp = iif(length(toString(timestamp)) > 10, 0, toInteger(timestamp))\r",
-				",",
-				"          city_id = \"Boston\") ~> derivedColumn1",
+				"derivedColumn2 derive(id = toString(city_id) + '_' + toString(corrected_timestamp),",
+				"          temp_C = round(temp - 273.15),",
+				"          temp_min_C = round(temp_min - 273.15),",
+				"          {temp_,max_C} = round(temp_max - 273.15),",
+				"          feels_like_C = round(feels_like - 273.15),",
+				"          temp_min_F = round((temp_min - 273.15) * 9/5 + 32),",
+				"          temp_F = round((temp - 273.15) * 9/5 + 32),",
+				"          temp_max_F = round((temp_max - 273.15) * 9/5 + 32),",
+				"          feels_like_F = round((feels_like- 273.15) * 9/5 + 32),",
+				"          lon = -71.0589,",
+				"          lat = 42.3601,",
+				"          weather_id_value = toInteger(weather[0].id),",
+				"          weather_main_value = weather[0].main) ~> derivedColumn1",
 				"source1 foldDown(unroll(list),",
 				"     mapColumn(",
 				"          message,",
@@ -65,7 +78,10 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> flatten1",
-				"derivedColumn1 filter(ERROR_FUNCTION('!isNull(temp)__NEW_LINE_N__!isNull(humidity)__NEW_LINE_N__!isNull(timestamp)')) ~> filter1"
+				"derivedColumn1 filter(!isNull(temp_C)",
+				"!isNull(humidity)",
+				"!isNull(timestamp)) ~> filter1",
+				"flatten1 derive(corrected_timestamp = iif(length(toString(timestamp)) > 10, 0, toInteger(timestamp))) ~> derivedColumn2"
 			]
 		}
 	}
