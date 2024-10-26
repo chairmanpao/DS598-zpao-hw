@@ -1072,7 +1072,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "airpollutiondataflow_copy1",
+								"referenceName": "airpollutiondataflow",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -1095,7 +1095,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/airpollutiondataflow_copy1')]"
+				"[concat(variables('factoryId'), '/dataflows/airpollutiondataflow')]"
 			]
 		}
 	]
