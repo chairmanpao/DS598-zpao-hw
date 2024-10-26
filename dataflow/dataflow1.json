@@ -19,6 +19,9 @@
 				},
 				{
 					"name": "flatten1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -35,7 +38,9 @@
 				"     ignoreNoFilesFound: false,",
 				"     documentForm: 'documentPerLine',",
 				"     wildcardPaths:['/weatherhistory/data_*.json']) ~> source1",
-				"flatten1 derive() ~> derivedColumn1",
+				"flatten1 derive(timestamp = iif(length(toString(timestamp)) > 10, 0, toInteger(timestamp))\r",
+				",",
+				"          city_id = \"Boston\") ~> derivedColumn1",
 				"source1 foldDown(unroll(list),",
 				"     mapColumn(",
 				"          message,",
@@ -59,7 +64,8 @@
 				"          wind_speed = list.wind.speed",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1"
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"derivedColumn1 filter(ERROR_FUNCTION('!isNull(temp)__NEW_LINE_N__!isNull(humidity)__NEW_LINE_N__!isNull(timestamp)')) ~> filter1"
 			]
 		}
 	}
