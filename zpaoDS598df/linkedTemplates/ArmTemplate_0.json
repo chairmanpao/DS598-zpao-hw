@@ -654,7 +654,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     documentForm: 'documentPerLine',",
-						"     wildcardPaths:['/weatherhistory/data_*.json']) ~> source1",
+						"     wildcardPaths:['/weatherhistory/*']) ~> source1",
 						"source1 foldDown(unroll(list),",
 						"     mapColumn(",
 						"          message,",
