@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "airpollutiondataflow_copy1",
+						"referenceName": "airpollutiondataflow",
 						"type": "DataFlowReference"
 					},
 					"compute": {
