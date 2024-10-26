@@ -357,6 +357,93 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Json5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "zpaoDataLake",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "airpollution",
+						"fileSystem": "zpaoblob1"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"coord": {
+							"type": "object",
+							"properties": {
+								"lon": {
+									"type": "number"
+								},
+								"lat": {
+									"type": "number"
+								}
+							}
+						},
+						"list": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"main": {
+										"type": "object",
+										"properties": {
+											"aqi": {
+												"type": "integer"
+											}
+										}
+									},
+									"components": {
+										"type": "object",
+										"properties": {
+											"co": {
+												"type": "integer"
+											},
+											"no": {
+												"type": "number"
+											},
+											"no2": {
+												"type": "number"
+											},
+											"o3": {
+												"type": "number"
+											},
+											"so2": {
+												"type": "number"
+											},
+											"pm2_5": {
+												"type": "number"
+											},
+											"pm10": {
+												"type": "number"
+											},
+											"nh3": {
+												"type": "number"
+											}
+										}
+									},
+									"dt": {
+										"type": "integer"
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/zpaoDataLake')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -613,7 +700,168 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"name": "[concat(parameters('factoryName'), '/airpollutiondataflow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Json5",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "flatten1"
+						},
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "derivedColumn2"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          coord as (lon as double, lat as double),",
+						"          list as (main as (aqi as integer), components as (co as integer, no as double, no2 as double, o3 as double, so2 as double, pm2_5 as double, pm10 as double, nh3 as double), dt as integer)[]",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'documentPerLine') ~> source1",
+						"source1 foldDown(unroll(list),",
+						"     mapColumn(",
+						"          main = list.main,",
+						"          components = list.components,",
+						"          dt = list.dt,",
+						"          aqi = list.main.aqi",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> flatten1",
+						"flatten1 derive(location = \"Boston\",",
+						"          timestamp = iif(length(toString(dt)) > 10, toInteger(null()), toInteger(dt)),",
+						"          co = round(toFloat(byName('list.components.co')), 2),",
+						"          no = round(toFloat(byName('list.components.no')), 2),",
+						"          no2 = round(toFloat(byName('list.components.no2')), 2),",
+						"          o3 = round(toFloat(byName('list.components.o3')), 2),",
+						"          so2 = round(toFloat(byName('list.components.so2')), 2),",
+						"          pm2_5 = round(toFloat(byName('list.components.pm2_5')), 2),",
+						"          pm10 = round(toFloat(byName('list.components.pm10')), 2),",
+						"          nh3 = round(toFloat(byName('list.components.nh3')), 2)) ~> derivedColumn1",
+						"derivedColumn2 select(mapColumn(",
+						"          main,",
+						"          components,",
+						"          location,",
+						"          corrected_timestamp = timestamp",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"derivedColumn1 filter(!isNull(aqi) && !isNull(timestamp)) ~> filter1",
+						"filter1 derive(date_time = toTimestamp(toLong(timestamp) * 1000),",
+						"          id = location + '_' + toString(timestamp)) ~> derivedColumn2",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Json5')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/airpollutiondataflow_copy1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Json5",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "flatten1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          coord as (lon as double, lat as double),",
+						"          list as (main as (aqi as integer), components as (co as integer, no as double, no2 as double, o3 as double, so2 as double, pm2_5 as double, pm10 as double, nh3 as double), dt as integer)[]",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'documentPerLine') ~> source1",
+						"source1 foldDown(unroll(list),",
+						"     mapColumn(",
+						"          main = list.main,",
+						"          components = list.components,",
+						"          dt = list.dt,",
+						"          aqi = list.main.aqi",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> flatten1",
+						"flatten1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Json5')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/weatherdataflow')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -778,7 +1026,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow1",
+								"referenceName": "weatherdataflow",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -801,7 +1049,53 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+				"[concat(variables('factoryId'), '/dataflows/weatherdataflow')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "airpollutiondataflow_copy1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/airpollutiondataflow_copy1')]"
 			]
 		}
 	]
