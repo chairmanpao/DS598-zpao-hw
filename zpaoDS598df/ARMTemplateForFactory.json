@@ -685,6 +685,9 @@
 					"transformations": [
 						{
 							"name": "flatten1"
+						},
+						{
+							"name": "derivedColumn1"
 						}
 					],
 					"scriptLines": [
@@ -725,7 +728,8 @@
 						"     ),",
 						"     skipDuplicateMapInputs: false,",
 						"     skipDuplicateMapOutputs: false) ~> flatten1",
-						"flatten1 sink(allowSchemaDrift: true,",
+						"flatten1 derive(corrected_timestamp = iif(length(toString(timestamp)) > 10, toInteger(null()), toInteger(timestamp))) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     umask: 0022,",
 						"     preCommands: [],",
