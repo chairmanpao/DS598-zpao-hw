@@ -72,8 +72,6 @@
 				"derivedColumn1 filter(!isNull(aqi) && !isNull(timestamp)) ~> filter1",
 				"filter1 derive(date_time = toTimestamp(toLong(timestamp) * 1000),",
 				"          id = location + '_' + toString(timestamp),",
-				"          co = round(co, 2),",
-				"          no = round(co, 2),",
 				"          no2 = ERROR_FUNCTION(''),",
 				"          o3 = ERROR_FUNCTION(''),",
 				"          so2 = ERROR_FUNCTION(''),",
